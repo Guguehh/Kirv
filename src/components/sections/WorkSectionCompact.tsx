@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
 import { RevealSection } from "@/components/ui/reveal-section";
 import { TechLabel } from "@/components/ui/tech-label";
 import { AnimatedDivider } from "@/components/ui/animated-divider";
@@ -28,9 +29,67 @@ const projects = [
     description:
       "Plataforma interna que reduce el tiempo de despliegue de horas a minutos. Aprovisionamiento de infraestructura autoservicio.",
   },
+  {
+    id: "004",
+    title: "Automatización de Ventas con IA",
+    client: "Retail Omnicanal",
+    year: "2025",
+    description:
+      "Flujos de n8n integrados a CRM para clasificar consultas, responder automáticamente y alertar al equipo en tiempo real.",
+  },
+  {
+    id: "005",
+    title: "Observabilidad End-to-End",
+    client: "HealthTech",
+    year: "2026",
+    description:
+      "Stack de logs, métricas y trazas con alertas proactivas. MTTR reducido 35% y claridad en responsabilidades de servicios.",
+  },
+  {
+    id: "006",
+    title: "Portal de Clientes a Medida",
+    client: "Servicios Profesionales",
+    year: "2025",
+    description:
+      "Sitio y backend a medida con onboarding guiado, permisos granulares y reportes descargables.",
+  },
+  {
+    id: "007",
+    title: "ETL de Datos Financieros",
+    client: "FinTech",
+    year: "2026",
+    description:
+      "Normalización y enriquecimiento de datos provenientes de múltiples fuentes. Calidad y consistencia auditables.",
+  },
+  {
+    id: "008",
+    title: "Capa de Autorización Centralizada",
+    client: "Enterprise",
+    year: "2025",
+    description:
+      "Modelo de RBAC/ABAC con políticas versionadas y revisión de cambios. Menor complejidad en los servicios.",
+  },
+  {
+    id: "009",
+    title: "Diseño UX de Flujos Críticos",
+    client: "EdTech",
+    year: "2025",
+    description:
+      "Rediseño de flujos de evaluación y retroalimentación. Menos fricción, más claridad y métricas de finalización al alza.",
+  },
 ];
 
 export function WorkSectionCompact() {
+  const perPage = 3;
+  const pages = useMemo(() => {
+    const chunks: typeof projects[] = [] as any;
+    for (let i = 0; i < projects.length; i += perPage) {
+      chunks.push(projects.slice(i, i + perPage));
+    }
+    return chunks;
+  }, []);
+  const [page, setPage] = useState(0);
+
   return (
     <section id="work" className="pt-3 md:pt-4 lg:pt-5 pb-16 md:pb-24 bg-secondary/30 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -45,8 +104,8 @@ export function WorkSectionCompact() {
 
         <AnimatedDivider className="mb-0" />
 
-        <div className="divide-y divide-border">
-          {projects.map((project, index) => (
+        <div className="divide-y divide-border mt-2">
+          {pages[page].map((project, index) => (
             <RevealSection key={project.id} delay={index * 150}>
               <motion.article
                 whileHover={{ x: 12 }}
@@ -79,6 +138,33 @@ export function WorkSectionCompact() {
               </motion.article>
             </RevealSection>
           ))}
+        </div>
+
+        <div className="mt-3 md:mt-4 flex justify-end gap-3">
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            className={`inline-flex items-center justify-center font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border rounded-full transition-colors duration-medium ${
+              page === 0
+                ? "text-muted-foreground border-border cursor-not-allowed"
+                : "text-foreground border-border hover:bg-foreground hover:text-background"
+            }`}
+            aria-label="Página anterior"
+          >
+            ←
+          </button>
+          <button
+            onClick={() => setPage((p) => Math.min(pages.length - 1, p + 1))}
+            disabled={page === pages.length - 1}
+            className={`inline-flex items-center justify-center font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border rounded-full transition-colors duration-medium ${
+              page === pages.length - 1
+                ? "text-muted-foreground border-border cursor-not-allowed"
+                : "text-foreground border-border hover:bg-foreground hover:text-background"
+            }`}
+            aria-label="Página siguiente"
+          >
+            →
+          </button>
         </div>
       </div>
     </section>

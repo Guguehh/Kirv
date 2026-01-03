@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { TechLabel } from "@/components/ui/tech-label";
+import { Typewriter } from "@/components/ui/typewriter";
 import { AnimatedDivider } from "@/components/ui/animated-divider";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -71,7 +72,21 @@ export function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
           >
-            <TechLabel>Estudio de Ingeniería</TechLabel>
+              <TechLabel>
+                <Typewriter
+                  texts={[
+                    "Estudio de Ingeniería",
+                    "Estudio de Diseño UX",
+                    "Estudio de Inteligencia Artificial",
+                    "Estudio de Desarrollo",
+                    "Estudio de Automatizaciones",
+                  ]}
+                  speed={90}
+                  pause={1400}
+                  className="!text-[#2900D2] dark:!text-[#5B6CFF]"
+                />
+                <span className="ml-1 inline-block w-px h-[1em] align-middle bg-[#2900D2] dark:bg-[#5B6CFF] animate-pulse" />
+              </TechLabel>
           </motion.div>
 
           <AnimatedDivider className="my-6" delay={400} />
@@ -98,8 +113,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
               className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-xl font-light leading-relaxed"
             >
-              Somos ingenieros y socios de producto: convertimos tus ideas en sistemas confiables.
-              Metodología clara. Resultados medibles.
+              Somos un equipo de Ingenieros que expertos en convertir ideas en sistemas confiables, claros y funcionales
             </motion.p>
 
             <motion.div

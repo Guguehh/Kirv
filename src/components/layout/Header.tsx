@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
-  { label: "Trabajo", href: "#work" },
+  { label: "Nuestros Trabajos", href: "#work" },
   { label: "Servicios", href: "#services" },
   { label: "Nosotros", href: "#about" },
   { label: "Contacto", href: "#contact" },
@@ -38,9 +38,22 @@ export function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className="font-display text-xl font-semibold tracking-tight text-foreground"
+            className="inline-flex items-center"
           >
-            KIRV
+            <div
+              aria-label="KIRV"
+              className="block h-[62px] md:h-[78px] w-[172px] md:w-[220px] -my-2 md:-my-3 bg-[#4E5CF2] dark:bg-[#D9D9D9]"
+              style={{
+                WebkitMaskImage: 'url(/img/kirv-main-logo.svg)',
+                maskImage: 'url(/img/kirv-main-logo.svg)',
+                WebkitMaskRepeat: 'no-repeat',
+                maskRepeat: 'no-repeat',
+                WebkitMaskSize: 'contain',
+                maskSize: 'contain',
+                WebkitMaskPosition: 'left center',
+                maskPosition: 'left center',
+              }}
+            />
           </Link>
 
           {/* Desktop Navigation */}

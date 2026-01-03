@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useMemo, useState } from "react";
 import { RevealSection } from "@/components/ui/reveal-section";
 import { TechLabel } from "@/components/ui/tech-label";
 import { AnimatedDivider } from "@/components/ui/animated-divider";
@@ -25,9 +26,40 @@ const projects = [
     year: "2025",
     description: "Plataforma interna que reduce el tiempo de despliegue de horas a minutos. Aprovisionamiento de infraestructura autoservicio.",
   },
+  {
+    id: "004",
+    title: "Automatización de Ventas con IA",
+    client: "Retail Omnicanal",
+    year: "2025",
+    description: "Flujos de n8n integrados a CRM para clasificar consultas, responder automáticamente y alertar al equipo en tiempo real.",
+  },
+  {
+    id: "005",
+    title: "Observabilidad End-to-End",
+    client: "HealthTech",
+    year: "2026",
+    description: "Stack de logs, métricas y trazas con alertas proactivas. MTTR reducido 35% y claridad en responsabilidades de servicios.",
+  },
+  {
+    id: "006",
+    title: "Portal de Clientes a Medida",
+    client: "Servicios Profesionales",
+    year: "2025",
+    description: "Sitio y backend a medida con onboarding guiado, permisos granulares y reportes descargables.",
+  },
 ];
 
 export function WorkSection() {
+  const perPage = 3;
+  const pages = useMemo(() => {
+    const chunks: typeof projects[] = [] as any;
+    for (let i = 0; i < projects.length; i += perPage) {
+      chunks.push(projects.slice(i, i + perPage));
+    }
+    return chunks;
+  }, []);
+  const [page, setPage] = useState(0);
+
   return (
     <section id="work" className="py-16 md:py-24 lg:py-section bg-secondary/30 relative">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -43,7 +75,7 @@ export function WorkSection() {
         <AnimatedDivider className="mb-0" />
 
         <div className="divide-y divide-border">
-          {projects.map((project, index) => (
+          {pages[page].map((project, index) => (
             <RevealSection key={project.id} delay={index * 150}>
               <motion.article
                 whileHover={{ x: 12 }}
@@ -89,11 +121,38 @@ export function WorkSection() {
           ))}
         </div>
 
+        <div className="mt-4 md:mt-6 flex justify-end gap-3">
+          <button
+            onClick={() => setPage((p) => Math.max(0, p - 1))}
+            disabled={page === 0}
+            className={`inline-flex items-center justify-center font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border rounded-full transition-colors duration-medium ${
+              page === 0
+                ? "text-muted-foreground border-border cursor-not-allowed"
+                : "text-foreground border-border hover:bg-foreground hover:text-background"
+            }`}
+            aria-label="Página anterior"
+          >
+            ← 
+          </button>
+          <button
+            onClick={() => setPage((p) => Math.min(pages.length - 1, p + 1))}
+            disabled={page === pages.length - 1}
+            className={`inline-flex items-center justify-center font-mono text-xs uppercase tracking-[0.15em] px-4 py-2 border rounded-full transition-colors duration-medium ${
+              page === pages.length - 1
+                ? "text-muted-foreground border-border cursor-not-allowed"
+                : "text-foreground border-border hover:bg-foreground hover:text-background"
+            }`}
+            aria-label="Página siguiente"
+          >
+             →
+          </button>
+        </div>
+
         <RevealSection delay={400}>
           <div className="mt-12 md:mt-16 flex justify-center">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-3 md:gap-4 font-mono text-xs md:text-sm uppercase tracking-[0.15em] text-foreground border border-border px-6 md:px-8 py-3 md:py-4 hover:bg-foreground hover:text-background transition-all duration-medium"
+              className="group inline-flex items-center gap-3 md:gap-4 font-mono text-xs md:text-sm uppercase tracking-[0.15em] text-foreground border border-border px-6 md:px-8 py-3 md:py-4 hover:bg-[#2900D2] dark:hover:bg-[#5B6CFF] hover:text-background transition-colors duration-medium"
             >
               <span>Discutir Tu Proyecto</span>
               <motion.span
